@@ -1,0 +1,11 @@
+---
+- include: check-required-vars.yml
+- include: retrieve-certificate.yml
+- include: install-and-configure-parse-server.yml
+- include: install-and-configure-nginx.yml
+
+
+
+
+
+

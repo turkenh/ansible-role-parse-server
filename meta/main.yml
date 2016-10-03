@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: geerlingguy.nodejs
+    nodejs_version: "5.x"

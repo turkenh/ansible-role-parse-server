@@ -1,0 +1,20 @@
+---
+- name: Check if "parse_server_application_id" is defined
+  fail: msg="ERROR - required variable 'parse_server_application_id' missing."
+  when: parse_server_application_id is not defined
+
+- name: Check if "parse_server_master_key is" defined
+  fail: msg="ERROR - required variable 'parse_server_master_key' missing."
+  when: parse_server_master_key is not defined
+
+- name: Check if "parse_server_mongodb_database_uri" is defined
+  fail: msg="ERROR - required variable 'parse_server_mongodb_database_uri' missing."
+  when: parse_server_mongodb_database_uri is not defined
+
+- name: Check if "parse_server_domain" is defined
+  fail: msg="ERROR - required variable 'parse_server_domain' missing."
+  when: parse_server_domain is not defined
+
+- name: Check if "parse_server_email_for_certificate" is defined
+  fail: msg="ERROR - required variable 'parse_server_email_for_certificate' missing."
+  when: parse_server_email_for_certificate is not defined

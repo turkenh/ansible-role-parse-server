@@ -1,0 +1,15 @@
+{
+  "apps" : [{
+    "name"        : "parse-wrapper",
+    "script"      : "/usr/bin/parse-server",
+    "watch"       : true,
+    "merge_logs"  : true,
+    "cwd"         : "/home/parse",
+    "env": {
+      "PARSE_SERVER_CLOUD_CODE_MAIN": "/home/parse/cloud/main.js",
+      "PARSE_SERVER_DATABASE_URI": "{{parse_server_mongodb_database_uri}}",
+      "PARSE_SERVER_APPLICATION_ID": "{{parse_server_application_id}}",
+      "PARSE_SERVER_MASTER_KEY": "{{parse_server_master_key}}",
+    }
+  }]
+}
