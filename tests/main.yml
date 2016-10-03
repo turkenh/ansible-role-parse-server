@@ -20,7 +20,10 @@
 - name: Test parse-server role
   hosts: docker_containers
   vars:
-    parse_server_domain: example.com
     parse_server_email_for_certificate: test@example.com
+    parse_server_application_id: aaaaabbbbbccccc
+    parse_server_master_key: ttteeeesssttt
+    parse_server_database_uri: mongodb://parse:pass4parse@example.com:27017/myGame?ssl=true
+    parse_server_domain: api.easytipscollection.com
   roles:
     - parse-server
