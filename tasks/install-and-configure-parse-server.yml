@@ -1,6 +1,10 @@
 ---
 - name: Install parse-server with npm
   npm: name=parse-server global=yes
+  failed_when: false
+
+- name: Make sure parse-server installed
+  npm: name=parse-server global=yes
 
 - name: Install pm2 with npm
   npm: name=pm2 global=yes
@@ -17,7 +21,7 @@
   become_user: parse
 
 - name: Copy example cloud code for testing
-  copy: src=main.js dest=/home/parse/cloud/main.js 
+  copy: src=main.js dest=/home/parse/cloud/main.js
   become: yes
   become_user: parse
 
