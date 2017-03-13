@@ -1,6 +1,6 @@
 ---
 - name: Check if certificate available
-  stat: path=/etc/letsencrypt/archive/{{parse_server_domain}}
+  stat: path=/etc/letsencrypt/live/{{parse_server_domain}}
   register: cert_check
 
 - block:
@@ -18,15 +18,13 @@
     shell: >
       /opt/letsencrypt/letsencrypt-auto certonly --standalone --agree-tos --renew-by-default --redirect --text 
       --email {{parse_server_email_for_certificate}} -d {{parse_server_domain}}
-      {{'--server https://acme-staging.api.letsencrypt.org/directory' if parse_server_use_letsencrypt_staging else ''}} 
+      {{'--server https://acme-staging.api.letsencrypt.org/directory' if parse_server_use_letsencrypt_staging else ''}}
+
+  - name: Copy renew certs script
+    template: src=renew_cert.sh.j2 dest=/home/parse/renew_certs.sh mode=555
 
   - name: Set Up Let's Encrypt Auto Renewal
-    cron: name="renew cert" minute="30" hour="2" weekday="1" job="/opt/letsencrypt/letsencrypt-auto renew >> /var/log/le-renew.log"
+    cron: name="renew certs" minute="1" hour="3" day="1" job="/home/parse/renew_certs.sh >> /var/log/le-renew.log"
 
-  - name: Set Up Let's Encrypt Auto Renewal
-    cron: name="renew cert" minute="35" hour="2" weekday="1" job="cat /etc/letsencrypt/archive/{{parse_server_domain}}/{fullchain1.pem,privkey1.pem} > /etc/ssl/mongo.pem && chown mongodb:mongodb /etc/ssl/mongo.pem && chmod 600 /etc/ssl/mongo.pem"
-
-  - name: Set Up nginx reload
-    cron: name="reload nginx" minute="40" hour="2" weekday="1" job="/etc/init.d/nginx reload"
 
   when: not cert_check.stat.exists

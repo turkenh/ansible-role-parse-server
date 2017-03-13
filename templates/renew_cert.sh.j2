@@ -1,0 +1,10 @@
+#! /bin/bash
+service nginx stop
+service mongod stop
+/opt/letsencrypt/letsencrypt-auto renew
+cat /etc/letsencrypt/live/{{parse_server_domain}}/{fullchain.pem,privkey.pem} > /etc/ssl/mongo.pem
+chown mongodb:mongodb /etc/ssl/mongo.pem
+chmod 600 /etc/ssl/mongo.pem
+/etc/init.d/nginx reload
+service nginx start
+service mongod start
